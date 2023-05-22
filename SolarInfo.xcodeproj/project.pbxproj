@@ -7,18 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0922C3DC2A152CB4006E841E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DB2A152CB4006E841E /* MainView.swift */; };
+		0922C3DE2A155B36006E841E /* WalletInOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DD2A155B36006E841E /* WalletInOut.swift */; };
+		0922C3E02A155BCD006E841E /* WalletTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DF2A155BCD006E841E /* WalletTab.swift */; };
 		097028D32A07D1BB005643CB /* SolarInfoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028D22A07D1BB005643CB /* SolarInfoApp.swift */; };
 		097028D52A07D1BB005643CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028D42A07D1BB005643CB /* ContentView.swift */; };
 		097028D72A07D1BB005643CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097028D62A07D1BB005643CB /* Assets.xcassets */; };
 		097028DA2A07D1BB005643CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097028D92A07D1BB005643CB /* Preview Assets.xcassets */; };
+		097028E22A07D200005643CB /* BPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028E12A07D200005643CB /* BPModel.swift */; };
+		097028E42A07D249005643CB /* MarketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028E32A07D249005643CB /* MarketData.swift */; };
+		097028E62A07D269005643CB /* TransactionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028E52A07D269005643CB /* TransactionData.swift */; };
+		097028E82A07D281005643CB /* BlockchainData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028E72A07D281005643CB /* BlockchainData.swift */; };
+		097028EA2A07D29E005643CB /* WalletData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028E92A07D29E005643CB /* WalletData.swift */; };
+		097028EE2A07D8C2005643CB /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028ED2A07D8C2005643CB /* WalletView.swift */; };
+		097028F02A08350C005643CB /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028EF2A08350C005643CB /* StatsView.swift */; };
+		097028F22A13BBC9005643CB /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028F12A13BBC9005643CB /* Tab.swift */; };
+		097028F42A13BC9B005643CB /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028F32A13BC9B005643CB /* Home.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0922C3DB2A152CB4006E841E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		0922C3DD2A155B36006E841E /* WalletInOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInOut.swift; sourceTree = "<group>"; };
+		0922C3DF2A155BCD006E841E /* WalletTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTab.swift; sourceTree = "<group>"; };
 		097028CF2A07D1BB005643CB /* SolarInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		097028D22A07D1BB005643CB /* SolarInfoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarInfoApp.swift; sourceTree = "<group>"; };
 		097028D42A07D1BB005643CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		097028D62A07D1BB005643CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		097028D92A07D1BB005643CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		097028E12A07D200005643CB /* BPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPModel.swift; sourceTree = "<group>"; };
+		097028E32A07D249005643CB /* MarketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketData.swift; sourceTree = "<group>"; };
+		097028E52A07D269005643CB /* TransactionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionData.swift; sourceTree = "<group>"; };
+		097028E72A07D281005643CB /* BlockchainData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainData.swift; sourceTree = "<group>"; };
+		097028E92A07D29E005643CB /* WalletData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletData.swift; sourceTree = "<group>"; };
+		097028ED2A07D8C2005643CB /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
+		097028EF2A08350C005643CB /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		097028F12A13BBC9005643CB /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		097028F32A13BC9B005643CB /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +75,8 @@
 		097028D12A07D1BB005643CB /* SolarInfo */ = {
 			isa = PBXGroup;
 			children = (
+				097028EC2A07D2B5005643CB /* Views */,
+				097028E02A07D1CC005643CB /* Models */,
 				097028D22A07D1BB005643CB /* SolarInfoApp.swift */,
 				097028D42A07D1BB005643CB /* ContentView.swift */,
 				097028D62A07D1BB005643CB /* Assets.xcassets */,
@@ -65,6 +91,32 @@
 				097028D92A07D1BB005643CB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		097028E02A07D1CC005643CB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				097028E12A07D200005643CB /* BPModel.swift */,
+				097028E32A07D249005643CB /* MarketData.swift */,
+				097028E52A07D269005643CB /* TransactionData.swift */,
+				097028E72A07D281005643CB /* BlockchainData.swift */,
+				097028E92A07D29E005643CB /* WalletData.swift */,
+				097028F12A13BBC9005643CB /* Tab.swift */,
+				0922C3DD2A155B36006E841E /* WalletInOut.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		097028EC2A07D2B5005643CB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				097028ED2A07D8C2005643CB /* WalletView.swift */,
+				097028EF2A08350C005643CB /* StatsView.swift */,
+				097028F32A13BC9B005643CB /* Home.swift */,
+				0922C3DB2A152CB4006E841E /* MainView.swift */,
+				0922C3DF2A155BCD006E841E /* WalletTab.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +189,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				097028E22A07D200005643CB /* BPModel.swift in Sources */,
+				0922C3DC2A152CB4006E841E /* MainView.swift in Sources */,
+				097028E62A07D269005643CB /* TransactionData.swift in Sources */,
+				097028EA2A07D29E005643CB /* WalletData.swift in Sources */,
+				097028F42A13BC9B005643CB /* Home.swift in Sources */,
+				097028E42A07D249005643CB /* MarketData.swift in Sources */,
 				097028D52A07D1BB005643CB /* ContentView.swift in Sources */,
 				097028D32A07D1BB005643CB /* SolarInfoApp.swift in Sources */,
+				097028E82A07D281005643CB /* BlockchainData.swift in Sources */,
+				097028F22A13BBC9005643CB /* Tab.swift in Sources */,
+				0922C3DE2A155B36006E841E /* WalletInOut.swift in Sources */,
+				097028EE2A07D8C2005643CB /* WalletView.swift in Sources */,
+				0922C3E02A155BCD006E841E /* WalletTab.swift in Sources */,
+				097028F02A08350C005643CB /* StatsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +339,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,6 +369,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
