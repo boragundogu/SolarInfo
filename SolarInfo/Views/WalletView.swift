@@ -16,6 +16,10 @@ struct WalletView: View {
     @State var amounts: String
     @State var inComingArray: [String]
     @State var outGoingArray: [String]
+    @State private var isPopupVisible = false
+    @State private var showPlusButton = true
+    
+    let showPlusButtonKey = "showPlusButtonKey"
     
     var body: some View {
         
@@ -23,47 +27,80 @@ struct WalletView: View {
             Color("bg").ignoresSafeArea()
             VStack {
                 
-                    TextField("asd", text: $walletTF)
-                        .multilineTextAlignment(.center)
-                        .background(Color.white)
-                    
-                    
-                    Button {
-                        fetchWallet()
-                       fetchIncoming { transactions in
-                            if let transactions = transactions {
-                                for transaction in transactions {
-                                    for transfer in transaction.asset.transfers {
-                                        if transfer.recipientId == self.walletTF {
-                                            let amounts = transfer.amount
-                                            let integerAmounts = Double(amounts)! / 100000000
-                                            let formatter = NumberFormatter()
-                                            formatter.numberStyle = .decimal
-                                            let amountString = formatter.string(for: integerAmounts)
-                                            self.inComingArray.append(amountString!)
-                                           // print(inComingArray)
+                if showPlusButton {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.orange)
+                        .offset(x: 0, y: 260)
+                        .onTapGesture {
+                            isPopupVisible = true
+                            showPlusButton = false
+                        }
+                }
+                Spacer()
+                if isPopupVisible {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                        isPopupVisible = false
+                        showPlusButton = true
+                       }
+                    VStack {
+                        TextField("asd", text: $walletTF)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding()
+                        Button {
+                            fetchWallet()
+                           fetchIncoming { transactions in
+                                if let transactions = transactions {
+                                    for transaction in transactions {
+                                        for transfer in transaction.asset.transfers {
+                                            if transfer.recipientId == self.walletTF {
+                                                let amounts = transfer.amount
+                                                let integerAmounts = Double(amounts)! / 100000000
+                                                let formatter = NumberFormatter()
+                                                formatter.numberStyle = .decimal
+                                                let amountString = formatter.string(for: integerAmounts)
+                                                self.inComingArray.append(amountString!)
+                                               // print(inComingArray)
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    } label: {
-                        Text("Button")
-                    }.padding(80)
-                    
-                    VStack(spacing: 20) {
-                        Text("Balance:" + " " + "\(balanceLabel)" + " " + "SXP")
-                            .fontWeight(.light)
-                            .foregroundColor(.white)
-                        Text(addressLabel)
-                            .fontWeight(.light)
-                            .foregroundColor(.white)
-                        ForEach(inComingArray, id: \.self) { outAmount in
-                            Text("+"+"\(outAmount)" + " " + "SXP")
-                                .fontWeight(.light)
+                            isPopupVisible = false
+                            showPlusButton = false
+                        } label: {
+                            Text("Tamam")
                                 .foregroundColor(.white)
+                                .padding()
+                                .background(Color.orange)
+                                .cornerRadius(10)
                         }
+                        
                     }
+                   
+                }
+                
+                VStack(spacing: 0) {
+                     Text("Balance:" + " " + "\(balanceLabel)" + " " + "SXP")
+                         .fontWeight(.light)
+                         .foregroundColor(.white)
+                     Text(addressLabel)
+                         .fontWeight(.light)
+                         .foregroundColor(.white)
+                     ForEach(inComingArray, id: \.self) { outAmount in
+                         Text("+"+"\(outAmount)" + " " + "SXP")
+                             .fontWeight(.light)
+                             .foregroundColor(.white)
+                     }
+                    
+                 }
+                .padding()
+                
+            }
+            .onAppear{
             }
         }
     }
