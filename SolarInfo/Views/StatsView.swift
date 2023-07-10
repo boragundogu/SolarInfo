@@ -7,10 +7,24 @@
 
 import SwiftUI
 
-struct StatsView: View {
+struct Item: Identifiable {
     
+    let id = UUID()
+    let text: String
+    let label: String
+    let image: String
+}
+
+struct StatsView: View {
+
+
     var initialSupply = 520737576
     @State private var timer = Timer()
+    
+
+    let adaptiveColumns = [
+        GridItem(.adaptive(minimum: 170))
+    ]
     
     @State var txLabel: String
     @State var supplyLabel: String
@@ -22,36 +36,54 @@ struct StatsView: View {
     
     var body: some View {
         
-        ZStack {
-            Color("bg").ignoresSafeArea()
-            VStack{
-                Text("Total Transaction:" + " " + "\(txLabel)")
-                    .foregroundColor(.white)
-                Text("Total Supply:" + " " + "\(supplyLabel)")
-                    .foregroundColor(.white)
-                Text("Total Block Height:" + " " + "\(heightLabel)")
-                    .foregroundColor(.white)
-                Text("Total Burned:" + " " + "\(burnedLabel)")
-                    .foregroundColor(.white)
-                Text("Created:" + " " + "\(createdLabel)")
-                    .foregroundColor(.white)
-                Text("Price:" + " " + "\(priceLabel)")
-                    .foregroundColor(.white)
+        let items = [
+            Item(text: self.txLabel, label: "Transaction", image: "tx"),
+            Item(text: self.supplyLabel, label: "Total Supply", image: "supply"),
+            Item(text: self.heightLabel, label: "Block Height", image: "height"),
+            Item(text: self.burnedLabel, label: "Total Burned", image: "burned"),
+            Item(text: self.createdLabel, label: "Total Created", image: "created"),
+            Item(text: self.priceLabel, label: "Price", image: "price")
+        ]
+        
+        NavigationView {
+            ScrollView {
+                Text("mrb")
+                LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                        ForEach(items) { item in
+                                ZStack {
+                                    Rectangle()
+                                        .frame(width: 160, height: 160)
+                                        .foregroundColor(Color("mainbg"))
+                                        .cornerRadius(30)
+                                    VStack(spacing: 20) {
+                                        Text("\(item.label)")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 20, weight: .medium, design: .rounded))
+                                        Text("\(item.text)")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 20, weight: .medium, design: .rounded))
+                                    }
+                                }
+                        }
+                }
             }
-            .onAppear {
-                fetchMainData()
-                callFunc()
-                
+            .background{
+                Color("bg")
+                    .ignoresSafeArea()
+            }
         }
-        }
-
+        .onAppear{
+           fetchMainData()
+            callFunc()
+    }
     }
     
     func callFunc(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8){
             return fetchMarketData()
         }
     }
+    
     
     func fetchMarketData(){
         
@@ -68,7 +100,7 @@ struct StatsView: View {
             do {
                 let marketInfo = try JSONDecoder().decode(MarketData.self, from: data)
                 let price = marketInfo.market_data.current_price
-                let currentPrice = String(price["usd"]!).prefix(4)
+                let currentPrice = String(price["usd"]!).prefix(6)
                 
                 priceLabel.self = String(currentPrice)
                 //return self.fetchMarketData()
@@ -80,7 +112,7 @@ struct StatsView: View {
         
     }
     
-    func fetchMainData(){
+     func fetchMainData(){
         
         guard let txUrl = URL(string: "https://api.solar.org/api/transactions") else {
             return
@@ -113,6 +145,7 @@ struct StatsView: View {
                 heightLabel.self = heightString!
                 burnedLabel.self = burnedString!
                 createdLabel.self = createdString!
+                
                 
                 return self.fetchMainData()
                 

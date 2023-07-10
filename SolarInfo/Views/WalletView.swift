@@ -11,11 +11,13 @@ struct WalletView: View {
     
     @State var walletTF: String
     @State var addressLabel : String
+    @State var delegateUsername: String
     @State private var walletData: WalletData?
     @State var balanceLabel = ""
     @State var amounts: String
     @State var inComingArray: [String]
     @State var outGoingArray: [String]
+    @State var senderArray: [String]
     @State private var isPopupVisible = false
     @State private var showPlusButton = true
     
@@ -47,60 +49,79 @@ struct WalletView: View {
                         showPlusButton = true
                        }
                     VStack {
-                        TextField("asd", text: $walletTF)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding()
-                        Button {
-                            fetchWallet()
-                           fetchIncoming { transactions in
-                                if let transactions = transactions {
-                                    for transaction in transactions {
-                                        for transfer in transaction.asset.transfers {
-                                            if transfer.recipientId == self.walletTF {
-                                                let amounts = transfer.amount
-                                                let integerAmounts = Double(amounts)! / 100000000
-                                                let formatter = NumberFormatter()
-                                                formatter.numberStyle = .decimal
-                                                let amountString = formatter.string(for: integerAmounts)
-                                                self.inComingArray.append(amountString!)
-                                               // print(inComingArray)
+                            TextField("asd", text: $walletTF)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding()
+                        
+                        if walletTF.prefix(1) == "S" && walletTF.count == 34 {
+                            Button {
+                                fetchWallet()
+                               fetchIncoming { transactions in
+                                    if let transactions = transactions {
+                                        self.inComingArray.removeAll()
+                                        for transaction in transactions {
+                                            for transfer in transaction.asset.transfers {
+                                                if transfer.recipientId == self.walletTF {
+                                                    let amounts = transfer.amount
+                                                    let integerAmounts = Double(amounts)! / 100000000
+                                                    let formatter = NumberFormatter()
+                                                    formatter.numberStyle = .decimal
+                                                    let amountString = formatter.string(for: integerAmounts)
+                                                    self.inComingArray.append(amountString!)
+                                                    //print(inComingArray)
+                                                }
                                             }
                                         }
                                     }
                                 }
+                                fetchIncoming { sender in
+                                    if let sender = sender {
+                                        self.senderArray.removeAll()
+                                        for senderName in sender {
+                                            self.senderArray.append(senderName.sender)
+                                        }
+                                    }
+                                }
+                                isPopupVisible = false
+                                showPlusButton = false
+                            } label: {
+                                Text("Tamam")
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.orange)
+                                    .cornerRadius(10)
                             }
-                            isPopupVisible = false
-                            showPlusButton = false
-                        } label: {
-                            Text("Tamam")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.orange)
-                                .cornerRadius(10)
                         }
-                        
                     }
                    
                 }
                 
                 VStack(spacing: 0) {
-                     Text("Balance:" + " " + "\(balanceLabel)" + " " + "SXP")
-                         .fontWeight(.light)
-                         .foregroundColor(.white)
+                    if balanceLabel != "" {
+                        Text("Balance:" + " " + "\(balanceLabel)" + " " + "SXP")
+                            .fontWeight(.light)
+                            .foregroundColor(.white)
+                        ForEach(senderArray, id: \.self) { sender in
+                            Text("\(sender)")
+                                .fontWeight(.light)
+                                .foregroundColor(.white)
+                        }
+                    }
                      Text(addressLabel)
                          .fontWeight(.light)
                          .foregroundColor(.white)
-                     ForEach(inComingArray, id: \.self) { outAmount in
-                         Text("+"+"\(outAmount)" + " " + "SXP")
-                             .fontWeight(.light)
-                             .foregroundColor(.white)
-                     }
+                    VStack {
+                        ForEach(inComingArray, id: \.self) { outAmount in
+                             Text("+"+"\(outAmount)" + " " + "SXP")
+                                 .fontWeight(.light)
+                                 .foregroundColor(.white)
+                         }
+                        .padding()
+                    }
                     
                  }
                 .padding()
                 
-            }
-            .onAppear{
             }
         }
     }
@@ -120,11 +141,13 @@ struct WalletView: View {
                 return
             }
             
+
+            
+            
             do {
-                let dataValue = try JSONDecoder().decode(WalletInOut.self, from: data)
+                let dataValue = try JSONDecoder().decode(IncomingData.self, from: data)
                 let transactions = dataValue.data
                 completion(transactions)
-                //print(transactions)
             }
             catch {
                 print("error decoding incoming wallet data \(error.localizedDescription)")
@@ -150,11 +173,15 @@ struct WalletView: View {
             do {
                 let walletInfo = try JSONDecoder().decode(WalletData.self, from: data)
                 addressLabel.self = walletInfo.data.address
+//                self.delegateUsername = walletInfo.data.attributes.delegate.username
+//                print(delegateUsername)
                 let balance = Int(walletInfo.data.balance)! / 100000000
                 let formatter = NumberFormatter()
                 formatter.numberStyle = .decimal
                 let balanceString = formatter.string(for: balance)
                 balanceLabel.self = balanceString!
+                
+                return self.fetchWallet()
         
                 
             }
@@ -171,6 +198,6 @@ struct WalletView: View {
 
 struct WalletView_Previews: PreviewProvider {
     static var previews: some View {
-        WalletView(walletTF: "", addressLabel: "", balanceLabel: "", amounts: "", inComingArray: [], outGoingArray: [])
+        WalletView(walletTF: "", addressLabel: "", delegateUsername: "", amounts: "", inComingArray: [], outGoingArray: [], senderArray: [])
     }
 }

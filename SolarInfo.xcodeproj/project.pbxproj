@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09177ADA2A30CCDE0053B1E4 /* DelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09177AD92A30CCDE0053B1E4 /* DelegateList.swift */; };
 		0922C3DC2A152CB4006E841E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DB2A152CB4006E841E /* MainView.swift */; };
-		0922C3DE2A155B36006E841E /* WalletInOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DD2A155B36006E841E /* WalletInOut.swift */; };
+		0922C3DE2A155B36006E841E /* IncomingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DD2A155B36006E841E /* IncomingData.swift */; };
 		0922C3E02A155BCD006E841E /* WalletTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DF2A155BCD006E841E /* WalletTab.swift */; };
 		097028D32A07D1BB005643CB /* SolarInfoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028D22A07D1BB005643CB /* SolarInfoApp.swift */; };
 		097028D52A07D1BB005643CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028D42A07D1BB005643CB /* ContentView.swift */; };
@@ -23,11 +24,15 @@
 		097028F02A08350C005643CB /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028EF2A08350C005643CB /* StatsView.swift */; };
 		097028F22A13BBC9005643CB /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028F12A13BBC9005643CB /* Tab.swift */; };
 		097028F42A13BC9B005643CB /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028F32A13BC9B005643CB /* Home.swift */; };
+		09788A982A34E95600645FF2 /* OutgoingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09788A972A34E95600645FF2 /* OutgoingData.swift */; };
+		097B269A2A5C9C6700A07916 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097B26992A5C9C6700A07916 /* SplashView.swift */; };
+		098310DB2A30C78600EA00FE /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098310DA2A30C78600EA00FE /* Delegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09177AD92A30CCDE0053B1E4 /* DelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateList.swift; sourceTree = "<group>"; };
 		0922C3DB2A152CB4006E841E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		0922C3DD2A155B36006E841E /* WalletInOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInOut.swift; sourceTree = "<group>"; };
+		0922C3DD2A155B36006E841E /* IncomingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingData.swift; sourceTree = "<group>"; };
 		0922C3DF2A155BCD006E841E /* WalletTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTab.swift; sourceTree = "<group>"; };
 		097028CF2A07D1BB005643CB /* SolarInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		097028D22A07D1BB005643CB /* SolarInfoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarInfoApp.swift; sourceTree = "<group>"; };
@@ -43,6 +48,9 @@
 		097028EF2A08350C005643CB /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		097028F12A13BBC9005643CB /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		097028F32A13BC9B005643CB /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		09788A972A34E95600645FF2 /* OutgoingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingData.swift; sourceTree = "<group>"; };
+		097B26992A5C9C6700A07916 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		098310DA2A30C78600EA00FE /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +83,7 @@
 		097028D12A07D1BB005643CB /* SolarInfo */ = {
 			isa = PBXGroup;
 			children = (
+				098310DC2A30C82D00EA00FE /* ViewModel */,
 				097028EC2A07D2B5005643CB /* Views */,
 				097028E02A07D1CC005643CB /* Models */,
 				097028D22A07D1BB005643CB /* SolarInfoApp.swift */,
@@ -102,7 +111,9 @@
 				097028E72A07D281005643CB /* BlockchainData.swift */,
 				097028E92A07D29E005643CB /* WalletData.swift */,
 				097028F12A13BBC9005643CB /* Tab.swift */,
-				0922C3DD2A155B36006E841E /* WalletInOut.swift */,
+				0922C3DD2A155B36006E841E /* IncomingData.swift */,
+				09788A972A34E95600645FF2 /* OutgoingData.swift */,
+				098310DA2A30C78600EA00FE /* Delegate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -115,8 +126,17 @@
 				097028F32A13BC9B005643CB /* Home.swift */,
 				0922C3DB2A152CB4006E841E /* MainView.swift */,
 				0922C3DF2A155BCD006E841E /* WalletTab.swift */,
+				09177AD92A30CCDE0053B1E4 /* DelegateList.swift */,
+				097B26992A5C9C6700A07916 /* SplashView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		098310DC2A30C82D00EA00FE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,14 +215,18 @@
 				097028EA2A07D29E005643CB /* WalletData.swift in Sources */,
 				097028F42A13BC9B005643CB /* Home.swift in Sources */,
 				097028E42A07D249005643CB /* MarketData.swift in Sources */,
+				09177ADA2A30CCDE0053B1E4 /* DelegateList.swift in Sources */,
+				098310DB2A30C78600EA00FE /* Delegate.swift in Sources */,
 				097028D52A07D1BB005643CB /* ContentView.swift in Sources */,
 				097028D32A07D1BB005643CB /* SolarInfoApp.swift in Sources */,
 				097028E82A07D281005643CB /* BlockchainData.swift in Sources */,
+				09788A982A34E95600645FF2 /* OutgoingData.swift in Sources */,
 				097028F22A13BBC9005643CB /* Tab.swift in Sources */,
-				0922C3DE2A155B36006E841E /* WalletInOut.swift in Sources */,
+				0922C3DE2A155B36006E841E /* IncomingData.swift in Sources */,
 				097028EE2A07D8C2005643CB /* WalletView.swift in Sources */,
 				0922C3E02A155BCD006E841E /* WalletTab.swift in Sources */,
 				097028F02A08350C005643CB /* StatsView.swift in Sources */,
+				097B269A2A5C9C6700A07916 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +283,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -313,7 +337,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
