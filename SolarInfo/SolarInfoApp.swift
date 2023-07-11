@@ -11,7 +11,7 @@ import SwiftUI
 struct SolarInfoApp: App {
     var body: some Scene {
         WindowGroup {
-            Home()
+            SplashView()
         }
     }
 }

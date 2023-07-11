@@ -27,6 +27,7 @@
 		09788A982A34E95600645FF2 /* OutgoingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09788A972A34E95600645FF2 /* OutgoingData.swift */; };
 		097B269A2A5C9C6700A07916 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097B26992A5C9C6700A07916 /* SplashView.swift */; };
 		098310DB2A30C78600EA00FE /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098310DA2A30C78600EA00FE /* Delegate.swift */; };
+		09D3EB162A5DD8D800985754 /* CoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D3EB152A5DD8D800985754 /* CoinData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		09788A972A34E95600645FF2 /* OutgoingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingData.swift; sourceTree = "<group>"; };
 		097B26992A5C9C6700A07916 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		098310DA2A30C78600EA00FE /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
+		09D3EB152A5DD8D800985754 /* CoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				097028E12A07D200005643CB /* BPModel.swift */,
 				097028E32A07D249005643CB /* MarketData.swift */,
+				09D3EB152A5DD8D800985754 /* CoinData.swift */,
 				097028E52A07D269005643CB /* TransactionData.swift */,
 				097028E72A07D281005643CB /* BlockchainData.swift */,
 				097028E92A07D29E005643CB /* WalletData.swift */,
@@ -220,6 +223,7 @@
 				097028D52A07D1BB005643CB /* ContentView.swift in Sources */,
 				097028D32A07D1BB005643CB /* SolarInfoApp.swift in Sources */,
 				097028E82A07D281005643CB /* BlockchainData.swift in Sources */,
+				09D3EB162A5DD8D800985754 /* CoinData.swift in Sources */,
 				09788A982A34E95600645FF2 /* OutgoingData.swift in Sources */,
 				097028F22A13BBC9005643CB /* Tab.swift in Sources */,
 				0922C3DE2A155B36006E841E /* IncomingData.swift in Sources */,

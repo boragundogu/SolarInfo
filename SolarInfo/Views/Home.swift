@@ -18,7 +18,7 @@ struct Home: View {
            Color("mainbg").ignoresSafeArea()
             VStack(spacing: 0) {
                     TabView(selection: $activeTab) {
-                        StatsView(txLabel: "", supplyLabel: "", heightLabel: "", burnedLabel: "", createdLabel: "", priceLabel: "")
+                        StatsView(txLabel: "", supplyLabel: "", heightLabel: "", burnedLabel: "", createdLabel: "", priceLabel: "", percentLabel: "", capLabel: "")
                         //Text("Home")
                             .tag(Tab.info)
                             .toolbar(.hidden, for: .tabBar)

@@ -10,10 +10,11 @@ import Foundation
 
 struct MarketData: Codable {
     
-    let market_data:market_data
+    let market_data: market_data
     let symbol: String
 }
 
 struct market_data: Codable {
     let current_price: [String:Double]
+    let market_cap: [String:Double]
 }

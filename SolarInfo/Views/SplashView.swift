@@ -17,8 +17,7 @@ struct SplashView: View {
                 Home()
             }
             else {
-            Color("Orange").ignoresSafeArea()
-                .opacity(0.85)
+                Color("mainbg").ignoresSafeArea()
             VStack {
                 VStack{
                     Image("solar")

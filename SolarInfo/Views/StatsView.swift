@@ -13,6 +13,7 @@ struct Item: Identifiable {
     let text: String
     let label: String
     let image: String
+    let imgColor: Color
 }
 
 struct StatsView: View {
@@ -32,30 +33,38 @@ struct StatsView: View {
     @State var burnedLabel: String
     @State var createdLabel: String
     @State var priceLabel: String
+    @State var percentLabel: String
+    @State var capLabel: String
+    
     
     
     var body: some View {
         
         let items = [
-            Item(text: self.txLabel, label: "Transaction", image: "tx"),
-            Item(text: self.supplyLabel, label: "Total Supply", image: "supply"),
-            Item(text: self.heightLabel, label: "Block Height", image: "height"),
-            Item(text: self.burnedLabel, label: "Total Burned", image: "burned"),
-            Item(text: self.createdLabel, label: "Total Created", image: "created"),
-            Item(text: self.priceLabel, label: "Price", image: "price")
+            Item(text: self.txLabel, label: "Transactions", image: "square.stack.3d.up", imgColor: Color("tx")),
+            Item(text: self.supplyLabel, label: "Total Supply", image: "hockey.puck", imgColor: Color("supply")),
+            Item(text: self.heightLabel, label: "Latest Block", image: "cube", imgColor: Color.yellow),
+            Item(text: self.burnedLabel, label: "Total Burned", image: "flame", imgColor: Color.orange),
+            Item(text: self.capLabel, label: "Market Cap", image: "chart.pie", imgColor: Color.mint),
+            Item(text: self.priceLabel, label: "Price", image: "dollarsign.circle", imgColor: Color.green)
         ]
         
         NavigationView {
             ScrollView {
                 Text("mrb")
-                LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                LazyVGrid(columns: adaptiveColumns, spacing: 15) {
                         ForEach(items) { item in
                                 ZStack {
                                     Rectangle()
-                                        .frame(width: 160, height: 160)
+                                        .frame(width: 170, height: 170)
                                         .foregroundColor(Color("mainbg"))
                                         .cornerRadius(30)
-                                    VStack(spacing: 20) {
+                                    VStack(spacing: 10) {
+                                        Image(systemName: "\(item.image)")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 30)
+                                            .foregroundColor(item.imgColor)
                                         Text("\(item.label)")
                                             .foregroundColor(.white)
                                             .font(.system(size: 20, weight: .medium, design: .rounded))
@@ -65,6 +74,37 @@ struct StatsView: View {
                                     }
                                 }
                         }
+                    
+                    if Double(percentLabel) ?? 0.0 < 0.0 {
+                        HStack{
+                            Image(systemName: "arrowtriangle.down.fill")
+                                    .offset(x: 198, y: -45)
+                                    .foregroundColor(.red)
+                            Text("%" + " " + percentLabel)
+                                .offset(x: 198, y: -45)
+                                .foregroundColor(.red).opacity(0.7)
+                            Text("|" + " " + "24H")
+                                .offset(x: 195, y: -46)
+                                .foregroundColor(.red).opacity(0.7)
+                        }
+                        .offset(x: 6)
+                        
+                    }
+                    else {
+                        HStack {
+                            Image(systemName: "triangle.fill")
+                                .offset(x: 198, y: -45)
+                                .foregroundColor(.green)
+                            Text("%" + " " + percentLabel)
+                                .offset(x: 198, y: -45)
+                                .foregroundColor(.green).opacity(0.7)
+                            Text("|" + " " + "24H")
+                                .offset(x: 195, y: -46)
+                                .foregroundColor(.green).opacity(0.7)
+                        }
+                        .offset(x: 6)
+                    }
+                    
                 }
             }
             .background{
@@ -73,7 +113,8 @@ struct StatsView: View {
             }
         }
         .onAppear{
-           fetchMainData()
+            fetchCoinData()
+            fetchMainData()
             callFunc()
     }
     }
@@ -99,17 +140,48 @@ struct StatsView: View {
             
             do {
                 let marketInfo = try JSONDecoder().decode(MarketData.self, from: data)
-                let price = marketInfo.market_data.current_price
-                let currentPrice = String(price["usd"]!).prefix(6)
+                let cap = marketInfo.market_data.market_cap
+                let currentCap = Double(cap["usd"]!)
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .decimal
+                let marketCap = formatter.string(for: currentCap)
                 
-                priceLabel.self = String(currentPrice)
-                //return self.fetchMarketData()
+                capLabel.self = "$" + "\(marketCap!.prefix(6))" + "M"
             }
             catch {
                 print("error decoding market data \(error.localizedDescription)")
             }
         }.resume()
         
+    }
+    
+    func fetchCoinData(){
+        guard let coinUrl = URL(string: "https://api.binance.com/api/v3/ticker/24hr?symbol=SXPUSDT") else {
+            return
+        }
+        
+        URLSession.shared.dataTask(with: coinUrl) { data, response, error in
+            guard let data = data, error == nil else {
+                print("error fetching binance sxp data \(error?.localizedDescription ?? "unknown error")")
+                return
+            }
+            
+            do{
+                let coinInfo = try JSONDecoder().decode(CoinData.self, from: data)
+                let coin = coinInfo.lastPrice
+                let percent = Double(coinInfo.priceChangePercent)
+                
+                
+                priceLabel.self = String(coin.prefix(6))
+                percentLabel.self = String(percent ?? 0.0)
+                //percentLabel.self = "0.55"
+                
+                return self.fetchCoinData()
+            }
+            catch {
+                print("error decoding binance sxp data \(error.localizedDescription)")
+            }
+        }.resume()
     }
     
      func fetchMainData(){
@@ -141,9 +213,9 @@ struct StatsView: View {
                 let heightString = formatter.string(for: height)
                 let burnedString = formatter.string(for: burned)
                 let createdString = formatter.string(for: created)
-                supplyLabel.self = supplyString!
+                supplyLabel.self = "\(supplyString!.prefix(6))" + "M"
                 heightLabel.self = heightString!
-                burnedLabel.self = burnedString!
+                burnedLabel.self = "\(burnedString!)" + " " + "SXP"
                 createdLabel.self = createdString!
                 
                 
@@ -184,6 +256,6 @@ struct StatsView: View {
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        StatsView(txLabel: "", supplyLabel: "", heightLabel: "", burnedLabel: "", createdLabel: "", priceLabel: "")
+        StatsView(txLabel: "", supplyLabel: "", heightLabel: "", burnedLabel: "", createdLabel: "", priceLabel: "", percentLabel: "", capLabel: "")
     }
 }
