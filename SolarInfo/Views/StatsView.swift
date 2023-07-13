@@ -14,6 +14,8 @@ struct Item: Identifiable {
     let label: String
     let image: String
     let imgColor: Color
+    let percent: String
+    let view: AnyView
 }
 
 struct StatsView: View {
@@ -35,18 +37,20 @@ struct StatsView: View {
     @State var priceLabel: String
     @State var percentLabel: String
     @State var capLabel: String
+    @State var presentPriceView = false
+    @State var selectedItem: Item?
     
     
     
     var body: some View {
         
         let items = [
-            Item(text: self.txLabel, label: "Transactions", image: "square.stack.3d.up", imgColor: Color("tx")),
-            Item(text: self.supplyLabel, label: "Total Supply", image: "hockey.puck", imgColor: Color("supply")),
-            Item(text: self.heightLabel, label: "Latest Block", image: "cube", imgColor: Color.yellow),
-            Item(text: self.burnedLabel, label: "Total Burned", image: "flame", imgColor: Color.orange),
-            Item(text: self.capLabel, label: "Market Cap", image: "chart.pie", imgColor: Color.mint),
-            Item(text: self.priceLabel, label: "Price", image: "dollarsign.circle", imgColor: Color.green)
+            Item(text: self.txLabel, label: "Transactions", image: "square.stack.3d.up", imgColor: Color("tx"), percent: "", view: AnyView(MainView())),
+            Item(text: self.supplyLabel, label: "Total Supply", image: "hockey.puck", imgColor: Color("supply"), percent: "", view: AnyView(SplashView())),
+            Item(text: self.heightLabel, label: "Latest Block", image: "cube", imgColor: Color.yellow, percent: "", view: AnyView(MainView())),
+            Item(text: self.burnedLabel, label: "Total Burned", image: "flame", imgColor: Color.orange, percent: "", view: AnyView(MainView())),
+            Item(text: self.capLabel, label: "Market Cap", image: "chart.pie", imgColor: Color.mint, percent: "", view: AnyView(MainView())),
+            Item(text: self.priceLabel, label: "Price", image: "dollarsign.circle", imgColor: Color.green, percent: self.percentLabel, view: AnyView(WalletView(walletTF: "", addressLabel: "", delegateUsername: "", amounts: "", inComingArray: [], outGoingArray: [], senderArray: [])))
         ]
         
         NavigationView {
@@ -54,57 +58,42 @@ struct StatsView: View {
                 Text("mrb")
                 LazyVGrid(columns: adaptiveColumns, spacing: 15) {
                         ForEach(items) { item in
+                            //NavigationLink(destination: item.view) {
+                            Button(action: {
+                                self.selectedItem = item
+                            }) {
                                 ZStack {
-                                    Rectangle()
-                                        .frame(width: 170, height: 170)
-                                        .foregroundColor(Color("mainbg"))
-                                        .cornerRadius(30)
-                                    VStack(spacing: 10) {
-                                        Image(systemName: "\(item.image)")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 30)
-                                            .foregroundColor(item.imgColor)
-                                        Text("\(item.label)")
-                                            .foregroundColor(.white)
-                                            .font(.system(size: 20, weight: .medium, design: .rounded))
-                                        Text("\(item.text)")
-                                            .foregroundColor(.white)
-                                            .font(.system(size: 20, weight: .medium, design: .rounded))
-                                    }
+                                            Rectangle()
+                                                .frame(width: 170, height: 170)
+                                                .foregroundColor(Color("mainbg"))
+                                                .cornerRadius(30)
+                                            VStack(spacing: 10) {
+                                                Image(systemName: "\(item.image)")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 30)
+                                                    .foregroundColor(item.imgColor)
+                                                Text("\(item.label)")
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 20, weight: .medium, design: .rounded))
+                                                Text("\(item.text)")
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 20, weight: .medium, design: .rounded))
+
+                                            }
                                 }
+                            }
+                            .fullScreenCover(item: self.$selectedItem) { item in
+                                NavigationView {
+                                    item.view
+                                        .navigationBarItems(leading: Button("Geri") {
+                                            self.selectedItem = nil
+                                        })
+                                }
+                            }
+                           // }
+                            
                         }
-                    
-                    if Double(percentLabel) ?? 0.0 < 0.0 {
-                        HStack{
-                            Image(systemName: "arrowtriangle.down.fill")
-                                    .offset(x: 198, y: -45)
-                                    .foregroundColor(.red)
-                            Text("%" + " " + percentLabel)
-                                .offset(x: 198, y: -45)
-                                .foregroundColor(.red).opacity(0.7)
-                            Text("|" + " " + "24H")
-                                .offset(x: 195, y: -46)
-                                .foregroundColor(.red).opacity(0.7)
-                        }
-                        .offset(x: 6)
-                        
-                    }
-                    else {
-                        HStack {
-                            Image(systemName: "triangle.fill")
-                                .offset(x: 198, y: -45)
-                                .foregroundColor(.green)
-                            Text("%" + " " + percentLabel)
-                                .offset(x: 198, y: -45)
-                                .foregroundColor(.green).opacity(0.7)
-                            Text("|" + " " + "24H")
-                                .offset(x: 195, y: -46)
-                                .foregroundColor(.green).opacity(0.7)
-                        }
-                        .offset(x: 6)
-                    }
-                    
                 }
             }
             .background{
@@ -115,7 +104,8 @@ struct StatsView: View {
         .onAppear{
             fetchCoinData()
             fetchMainData()
-            callFunc()
+            //callFunc() --> çok yüksek veri tüketimi değiştir !!!!
+            
     }
     }
     
@@ -147,6 +137,8 @@ struct StatsView: View {
                 let marketCap = formatter.string(for: currentCap)
                 
                 capLabel.self = "$" + "\(marketCap!.prefix(6))" + "M"
+                
+                return self.fetchMarketData()
             }
             catch {
                 print("error decoding market data \(error.localizedDescription)")
@@ -175,7 +167,6 @@ struct StatsView: View {
                 priceLabel.self = String(coin.prefix(6))
                 percentLabel.self = String(percent ?? 0.0)
                 //percentLabel.self = "0.55"
-                
                 return self.fetchCoinData()
             }
             catch {

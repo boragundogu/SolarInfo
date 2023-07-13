@@ -12,11 +12,13 @@ struct MainView: View {
         ZStack{
             Color("bg").ignoresSafeArea()
             VStack {
-                
+                Text("grid link test")
             }
         }
     }
 }
+
+
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {

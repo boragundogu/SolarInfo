@@ -15,4 +15,14 @@ struct WalletData: Codable {
 
 struct Wallet: Codable {
     let address, publicKey, balance: String
+//    let attributes: Attributes
 }
+
+//struct Attributes: Codable {
+//    let delegate: Delegates
+//}
+//
+//struct Delegates: Codable {
+//    let username: String
+//    let rank: Int
+//}

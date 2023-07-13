@@ -7,22 +7,23 @@
 
 import Foundation
 
-struct WalletInOut: Decodable {
+ struct IncomingData: Decodable {
     let data: [DataValue]
  }
  
  struct DataValue: Decodable {
     let asset: Asset
+    let sender: String
  }
  
- struct Asset: Decodable {
+  struct Asset: Decodable {
     let transfers: [Transfer]
+     
  }
+
  
  struct Transfer: Decodable {
     let amount: String
     let recipientId: String
  }
-
-
 
