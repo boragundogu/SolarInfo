@@ -82,6 +82,21 @@ struct WalletView: View {
                                         }
                                     }
                                 }
+                                fetchOutgoing { transactions in
+                                    if let transactions = transactions {
+                                        self.outGoingArray.removeAll()
+                                        for transaction in transactions {
+                                            for transfer in transaction.asset.transfers {
+                                                    let amounts = transfer.amount
+                                                    let integerAmounts = Double(amounts)! / 100000000
+                                                    let formatter = NumberFormatter()
+                                                    formatter.numberStyle = .decimal
+                                                    let amountString = formatter.string(for: integerAmounts)
+                                                    self.outGoingArray.append(amountString!)
+                                            }
+                                        }
+                                    }
+                                }
                                 isPopupVisible = false
                                 showPlusButton = false
                             } label: {
@@ -97,6 +112,11 @@ struct WalletView: View {
                 }
                 
                 VStack(spacing: 0) {
+                    ForEach(outGoingArray, id: \.self) { amount in
+                        Text("-" + "\(amount)" + " " + "SXP")
+                            .fontWeight(.light)
+                            .foregroundColor(.red)
+                    }
                     if balanceLabel != "" {
                         Text("Balance:" + " " + "\(balanceLabel)" + " " + "SXP")
                             .fontWeight(.light)
@@ -109,14 +129,13 @@ struct WalletView: View {
                     }
                      Text(addressLabel)
                          .fontWeight(.light)
-                         .foregroundColor(.white)
+                         .foregroundColor(.orange)
                     VStack {
                         ForEach(inComingArray, id: \.self) { outAmount in
                              Text("+"+"\(outAmount)" + " " + "SXP")
                                  .fontWeight(.light)
-                                 .foregroundColor(.white)
+                                 .foregroundColor(.green)
                          }
-                        .padding()
                     }
                     
                  }
@@ -126,6 +145,29 @@ struct WalletView: View {
         }
     }
     
+    func fetchOutgoing(completion: @escaping ([OutData]?) -> Void){
+        
+        let choosenWallet = walletTF
+        
+        guard let urlOut = URL(string: "https://api.solar.org/api/wallets/" + "\(choosenWallet)" + "/transactions/sent?page=1&limit=5") else {
+            return
+        }
+        
+        URLSession.shared.dataTask(with: urlOut) { data, response, error in
+            guard let data = data, error == nil else {
+                print("error fetching outgoing wallet data \(error?.localizedDescription ?? "error") ")
+                return
+            }
+            do {
+                let outData = try JSONDecoder().decode(OutgoingData.self, from: data)
+                let transactions = outData.data
+                completion(transactions)
+            }
+            catch {
+                print("error decoding outgoing wallet data \(error.localizedDescription)")
+            }
+        }.resume()
+    }
     
     func fetchIncoming(completion: @escaping ([DataValue]?) -> Void){
         
@@ -140,14 +182,11 @@ struct WalletView: View {
                 print("error fetching incoming wallet data \(error?.localizedDescription ?? "error")")
                 return
             }
-            
-
-            
-            
             do {
                 let dataValue = try JSONDecoder().decode(IncomingData.self, from: data)
                 let transactions = dataValue.data
                 completion(transactions)
+
             }
             catch {
                 print("error decoding incoming wallet data \(error.localizedDescription)")

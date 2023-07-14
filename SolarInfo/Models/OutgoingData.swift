@@ -2,28 +2,31 @@
 //  OutgoingData.swift
 //  SolarInfo
 //
-//  Created by Bora Gündoğu on 10.06.2023.
+//  Created by Bora Gündoğu on 14.07.2023.
 //
 
-//import Foundation
-//
-//private struct OutgoingData: Decodable {
-//    let data : [Data]
+import Foundation
+
+ struct OutgoingData: Codable {
+    let data: [OutData]
+ }
+ 
+ struct OutData: Codable {
+    let asset: OutAsset
+    let sender: String
+ }
+ 
+ struct OutAsset: Codable {
+    let transfers: [OutTransfer]
+   // let votes: Votes
+ }
+
+// struct Votes: Codable {
+//    let emsy: Double
 //}
-//
-//private struct Data: Decodable {
-//    let asset: Asset
-//}
-//
-//private struct Asset: Decodable {
-//    let transfer: [Transfer]
-//    let votes: Votes
-//}
-//
-//private struct Transfer: Decodable {
-//    let amount, recipientId : String
-//}
-//
-//private struct Votes: Decodable {
-//    let emsy,kippers : Int
-//}
+ 
+ struct OutTransfer: Codable {
+    let amount: String
+    let recipientId: String
+ }
+
