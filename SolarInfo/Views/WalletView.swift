@@ -112,11 +112,6 @@ struct WalletView: View {
                 }
                 
                 VStack(spacing: 0) {
-                    ForEach(outGoingArray, id: \.self) { amount in
-                        Text("-" + "\(amount)" + " " + "SXP")
-                            .fontWeight(.light)
-                            .foregroundColor(.red)
-                    }
                     if balanceLabel != "" {
                         Text("Balance:" + " " + "\(balanceLabel)" + " " + "SXP")
                             .fontWeight(.light)

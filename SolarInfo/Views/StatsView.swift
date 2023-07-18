@@ -19,10 +19,6 @@ struct Item: Identifiable {
 }
 
 struct StatsView: View {
-
-
-    var initialSupply = 520737576
-    @State private var timer = Timer()
     
 
     let adaptiveColumns = [
@@ -33,12 +29,13 @@ struct StatsView: View {
     @State var supplyLabel: String
     @State var heightLabel: String
     @State var burnedLabel: String
-    @State var createdLabel: String
     @State var priceLabel: String
     @State var percentLabel: String
     @State var capLabel: String
     @State var presentPriceView = false
     @State var selectedItem: Item?
+    @State var doublePrice: Double
+    @State var doubleSupply: Double
     
     
     
@@ -56,9 +53,9 @@ struct StatsView: View {
         NavigationView {
             ScrollView {
                 Text("mrb")
+                    .padding()
                 LazyVGrid(columns: adaptiveColumns, spacing: 15) {
                         ForEach(items) { item in
-                            //NavigationLink(destination: item.view) {
                             Button(action: {
                                 self.selectedItem = item
                             }) {
@@ -91,7 +88,6 @@ struct StatsView: View {
                                         })
                                 }
                             }
-                           // }
                             
                         }
                 }
@@ -104,48 +100,10 @@ struct StatsView: View {
         .onAppear{
             fetchCoinData()
             fetchMainData()
-            //callFunc() --> çok yüksek veri tüketimi değiştir !!!!
             
     }
     }
     
-    func callFunc(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8){
-            return fetchMarketData()
-        }
-    }
-    
-    
-    func fetchMarketData(){
-        
-        guard let marketUrl = URL(string: "https://api.coingecko.com/api/v3/coins/swipe") else {
-            return
-        }
-        
-        URLSession.shared.dataTask(with: marketUrl) { data, response, error in
-            guard let data = data, error == nil else {
-                print("error fetching market data \(error?.localizedDescription ?? "unknown")")
-                return
-            }
-            
-            do {
-                let marketInfo = try JSONDecoder().decode(MarketData.self, from: data)
-                let cap = marketInfo.market_data.market_cap
-                let currentCap = Double(cap["usd"]!)
-                let formatter = NumberFormatter()
-                formatter.numberStyle = .decimal
-                let marketCap = formatter.string(for: currentCap)
-                
-                capLabel.self = "$" + "\(marketCap!.prefix(6))" + "M"
-                
-                return self.fetchMarketData()
-            }
-            catch {
-                print("error decoding market data \(error.localizedDescription)")
-            }
-        }.resume()
-        
-    }
     
     func fetchCoinData(){
         guard let coinUrl = URL(string: "https://api.binance.com/api/v3/ticker/24hr?symbol=SXPUSDT") else {
@@ -161,7 +119,18 @@ struct StatsView: View {
             do{
                 let coinInfo = try JSONDecoder().decode(CoinData.self, from: data)
                 let coin = coinInfo.lastPrice
+                let doubleCoin = Double(coin)
+                self.doublePrice = doubleCoin!
+                let doubleSupply = self.doubleSupply
+                let doubleCap = doubleCoin! * doubleSupply
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .decimal
+                let capString = formatter.string(for: doubleCap)
+                self.capLabel = String("\(capString!.prefix(6))" + "M")
+                
                 let percent = Double(coinInfo.priceChangePercent)
+                
+                
                 
                 
                 priceLabel.self = String(coin.prefix(6))
@@ -194,20 +163,19 @@ struct StatsView: View {
             do {
                 let statsInfo = try JSONDecoder().decode(BlockchainData.self, from: data)
                 let supply = Int(statsInfo.data.supply.prefix(9))!
+                let doubleSupply = Double(statsInfo.data.supply.prefix(9))!
+                self.doubleSupply = doubleSupply
                 let height = statsInfo.data.block.height
                 let burned = Int(statsInfo.data.burned.total.prefix(5))!
-                let created = supply - initialSupply.self
                 
                 let formatter = NumberFormatter()
                 formatter.numberStyle = .decimal
                 let supplyString = formatter.string(for: supply)
                 let heightString = formatter.string(for: height)
                 let burnedString = formatter.string(for: burned)
-                let createdString = formatter.string(for: created)
                 supplyLabel.self = "\(supplyString!.prefix(6))" + "M"
                 heightLabel.self = heightString!
                 burnedLabel.self = "\(burnedString!)" + " " + "SXP"
-                createdLabel.self = createdString!
                 
                 
                 return self.fetchMainData()
@@ -247,6 +215,6 @@ struct StatsView: View {
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        StatsView(txLabel: "", supplyLabel: "", heightLabel: "", burnedLabel: "", createdLabel: "", priceLabel: "", percentLabel: "", capLabel: "")
+        StatsView(txLabel: "", supplyLabel: "", heightLabel: "", burnedLabel: "", priceLabel: "", percentLabel: "", capLabel: "", doublePrice: 0.0, doubleSupply: 0.0)
     }
 }

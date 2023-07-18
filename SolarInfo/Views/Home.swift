@@ -18,7 +18,7 @@ struct Home: View {
            Color("mainbg").ignoresSafeArea()
             VStack(spacing: 0) {
                     TabView(selection: $activeTab) {
-                        StatsView(txLabel: "", supplyLabel: "", heightLabel: "", burnedLabel: "", createdLabel: "", priceLabel: "", percentLabel: "", capLabel: "")
+                        StatsView(txLabel: "", supplyLabel: "", heightLabel: "", burnedLabel: "", priceLabel: "", percentLabel: "", capLabel: "", doublePrice: 0.0, doubleSupply: 0.0)
                         //Text("Home")
                             .tag(Tab.info)
                             .toolbar(.hidden, for: .tabBar)
@@ -26,7 +26,7 @@ struct Home: View {
                         //Text("Services")
                             .tag(Tab.wallet)
                             .toolbar(.hidden, for: .tabBar)
-                        DelegateList(usernameArray: [])
+                        CardView()
                             .tag(Tab.others)
                             .toolbar(.hidden, for: .tabBar)
                     }
