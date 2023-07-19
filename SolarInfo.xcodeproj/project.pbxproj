@@ -25,6 +25,7 @@
 		09ADC0302A66B9390076A02D /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADC02F2A66B9390076A02D /* Card.swift */; };
 		09ADC0322A66EC0A0076A02D /* Transactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADC0312A66EC0A0076A02D /* Transactions.swift */; };
 		09ADC0342A66F7FE0076A02D /* TransactionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADC0332A66F7FE0076A02D /* TransactionData.swift */; };
+		09ADC0362A685AE20076A02D /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADC0352A685AE20076A02D /* WalletViewModel.swift */; };
 		09D3EB162A5DD8D800985754 /* CoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D3EB152A5DD8D800985754 /* CoinData.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		09ADC02F2A66B9390076A02D /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		09ADC0312A66EC0A0076A02D /* Transactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transactions.swift; sourceTree = "<group>"; };
 		09ADC0332A66F7FE0076A02D /* TransactionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionData.swift; sourceTree = "<group>"; };
+		09ADC0352A685AE20076A02D /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
 		09D3EB152A5DD8D800985754 /* CoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,6 +134,7 @@
 		098310DC2A30C82D00EA00FE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				09ADC0352A685AE20076A02D /* WalletViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				09ADC0322A66EC0A0076A02D /* Transactions.swift in Sources */,
 				09ADC0302A66B9390076A02D /* Card.swift in Sources */,
 				097028EE2A07D8C2005643CB /* WalletView.swift in Sources */,
+				09ADC0362A685AE20076A02D /* WalletViewModel.swift in Sources */,
 				097028F02A08350C005643CB /* StatsView.swift in Sources */,
 				097B269A2A5C9C6700A07916 /* SplashView.swift in Sources */,
 			);

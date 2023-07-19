@@ -20,8 +20,14 @@ struct CardView: View {
     @State var showDetail: Bool = false
     @State var showDetailContent: Bool = false
     @State var showTransactions: Bool = false
+    @State private var walletInfos = WalletInfos()
+    @ObservedObject var walletViewModel = WalletViewModel()
+    
+    
     
     var body: some View {
+        
+        
         VStack {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Welcome!")
@@ -38,14 +44,19 @@ struct CardView: View {
                     .font(.callout)
                     .fontWeight(.semibold)
                     .foregroundColor(.gray)
+                    
+                    
         
-                Text("$2,142.35")
+                Text("\(walletInfos.balanceInfoLabel)" + "SXP")
                     .font(.title.bold())
                     .foregroundColor(.white)
             }
             .padding(15)
             .padding(.top, 10)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .onAppear {
+                walletInfos.balanceInfoLabel = walletInfos.balanceInfoLabel
+            }
             
             CardsScrollView()
         }
