@@ -22,11 +22,11 @@ struct Home: View {
                         //Text("Home")
                             .tag(Tab.info)
                             .toolbar(.hidden, for: .tabBar)
-                        WalletView(walletTF: "", addressLabel: "", delegateUsername: "", balanceLabel: "", amounts: "", inComingArray: [], senderArray: [])
+                        WalletView(walletTF: "", addressLabel: "", balanceLabel: "", amounts: "", inComingArray: [], senderArray: [])
                         //Text("Services")
                             .tag(Tab.wallet)
                             .toolbar(.hidden, for: .tabBar)
-                        CardView()
+                        CardView(adressLabel: .constant(""), balanceLabel: .constant(""), incomingArray: .constant([]), senderArray: .constant([]) )
                             .tag(Tab.others)
                             .toolbar(.hidden, for: .tabBar)
                     }

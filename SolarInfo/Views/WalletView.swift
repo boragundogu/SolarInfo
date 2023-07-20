@@ -7,17 +7,15 @@
 
 import SwiftUI
 
-struct WalletInfos {
-    var balanceInfoLabel = ""
-}
 
 struct WalletView: View {
+    
+    @Namespace var animation
     
     @ObservedObject var walletViewModel = WalletViewModel()
     
     @State var walletTF: String
     @State var addressLabel : String
-    @State var delegateUsername: String
     @State private var walletData: WalletData?
     @State var balanceLabel = ""
     @State var amounts: String
@@ -25,7 +23,6 @@ struct WalletView: View {
     @State var senderArray: [String]
     @State private var isPopupVisible = false
     @State private var showPlusButton = true
-    @State private var walletInfos = WalletInfos()
     
     let showPlusButtonKey = "showPlusButtonKey"
     
@@ -61,19 +58,22 @@ struct WalletView: View {
                         
                         if walletTF.prefix(1) == "S" && walletTF.count == 34 {
                             Button {
-                                walletViewModel.fetchWallet(choosenWallet: self.walletTF, balanceValue: self.balanceLabel, adressValue: self.addressLabel)
+                                walletViewModel.fetchWallet(choosenWallet: self.walletTF) { adress, balance in
+                                    self.addressLabel = adress
+                                    self.balanceLabel = balance
+                                }
                                 walletViewModel.fetchIncoming(choosenWallet: self.walletTF) {  transactions in
                                     if let transactions = transactions {
                                         self.inComingArray.removeAll()
                                         for transaction in transactions {
-                                            for transfer in transaction.asset.transfers {
+                                           for transfer in transaction.asset.transfers {
                                                 if transfer.recipientId == self.walletTF {
                                                     let amounts = transfer.amount
                                                     let integerAmounts = Double(amounts)! / 100000000
                                                     let formatter = NumberFormatter()
                                                     formatter.numberStyle = .decimal
                                                     let amountString = formatter.string(for: integerAmounts)
-                                                    self.inComingArray.append(amountString!)
+                                                    self.inComingArray.append(String(amountString!.prefix(4)))
                                                     //print(inComingArray)
                                                 }
                                             }
@@ -103,30 +103,10 @@ struct WalletView: View {
                 }
                 
                 VStack(spacing: 0) {
-                    if walletInfos.balanceInfoLabel != "" {
-                        Text("Balance:" + " " + "\(walletInfos.balanceInfoLabel)" + " " + "SXP")
-                            .fontWeight(.light)
-                            .foregroundColor(.white)
-                        ForEach(senderArray, id: \.self) { sender in
-                            Text("\(sender)")
-                                .fontWeight(.light)
-                                .foregroundColor(.white)
-                        }
-                    }
-                     Text(addressLabel)
-                         .fontWeight(.light)
-                         .foregroundColor(.orange)
-                    VStack {
-                        ForEach(inComingArray, id: \.self) { outAmount in
-                             Text("+"+"\(outAmount)" + " " + "SXP")
-                                 .fontWeight(.light)
-                                 .foregroundColor(.green)
-                         }
-                    }
-                    
+                    if self.balanceLabel != "" {
+                        CardView(animation: _animation, adressLabel: $addressLabel, balanceLabel: $balanceLabel, incomingArray: $inComingArray, senderArray: $senderArray)
+                    }      
                  }
-                .padding()
-                
             }
         }
     }
@@ -138,6 +118,6 @@ struct WalletView: View {
 
 struct WalletView_Previews: PreviewProvider {
     static var previews: some View {
-        WalletView(walletTF: "", addressLabel: "", delegateUsername: "", amounts: "", inComingArray: [], senderArray: [])
+        WalletView(walletTF: "", addressLabel: "", amounts: "", inComingArray: [], senderArray: [])
     }
 }

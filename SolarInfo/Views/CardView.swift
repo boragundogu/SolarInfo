@@ -10,7 +10,6 @@ import SwiftUI
 struct CardView: View {
     
     @State var card: [Card] = [
-        .init(cardImage: "card"),
         .init(cardImage: "card")
     ]
     
@@ -20,8 +19,13 @@ struct CardView: View {
     @State var showDetail: Bool = false
     @State var showDetailContent: Bool = false
     @State var showTransactions: Bool = false
-    @State private var walletInfos = WalletInfos()
     @ObservedObject var walletViewModel = WalletViewModel()
+    
+    @Binding var adressLabel: String
+    @Binding var balanceLabel: String
+    @Binding var incomingArray: [String]
+    @Binding var senderArray: [String]
+    
     
     
     
@@ -30,7 +34,7 @@ struct CardView: View {
         
         VStack {
             VStack(alignment: .leading, spacing: 6) {
-                Text("Welcome!")
+                Text("Welcome!" + "\(adressLabel)")
                     .font(.title.bold())
                     .foregroundColor(.white)
             }
@@ -47,7 +51,7 @@ struct CardView: View {
                     
                     
         
-                Text("\(walletInfos.balanceInfoLabel)" + "SXP")
+                Text("\(balanceLabel)" + "SXP")
                     .font(.title.bold())
                     .foregroundColor(.white)
             }
@@ -55,7 +59,6 @@ struct CardView: View {
             .padding(.top, 10)
             .frame(maxWidth: .infinity, alignment: .leading)
             .onAppear {
-                walletInfos.balanceInfoLabel = walletInfos.balanceInfoLabel
             }
             
             CardsScrollView()
@@ -63,7 +66,7 @@ struct CardView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
         .opacity(showDetail ? 0 : 1)
         .background{
-            Color("mainbg")
+            Color("bg")
                 .ignoresSafeArea()
         }
         .overlay{
@@ -176,15 +179,28 @@ struct CardView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 20){
-                    ForEach(card) { card in
-                        TransactionCardView(transaction: card)
+                    ForEach(incomingArray, id:\.self) { incoming in
+                        ForEach(senderArray, id:\.self) { sender in
+                        HStack{
+                            let firstThree = sender.prefix(3)
+                            let lastThree = sender.suffix(3)
+                            let formattedText = "\(firstThree)...\(lastThree)"
+                            Text("\(formattedText)")
+                                .foregroundColor(.white)
+                        Image(systemName: "arrow.up.forward")
+                                .foregroundColor(.green)
+                                .padding(.leading, 7)
+                        Text("\(incoming)" + " " + "SXP")
+                            .foregroundColor(.white)
+                    }
+                    }
                     }
                 }
             }
             .frame(width: size.width, height: size.height)
             .background{
                 RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .fill(.white)
+                    .fill(Color("mainbg"))
             }
             .offset(y: showTransactions ? 0 : size.height + 50)
         }
@@ -214,6 +230,6 @@ struct TransactionCardView: View{
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView()
+        CardView(adressLabel: .constant(""), balanceLabel: .constant(""), incomingArray: .constant([]), senderArray: .constant([]))
     }
 }

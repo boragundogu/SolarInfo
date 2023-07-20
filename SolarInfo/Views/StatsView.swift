@@ -47,7 +47,7 @@ struct StatsView: View {
             Item(text: self.heightLabel, label: "Latest Block", image: "cube", imgColor: Color.yellow, percent: "", view: AnyView(MainView())),
             Item(text: self.burnedLabel, label: "Total Burned", image: "flame", imgColor: Color.orange, percent: "", view: AnyView(MainView())),
             Item(text: self.capLabel, label: "Market Cap", image: "chart.pie", imgColor: Color.mint, percent: "", view: AnyView(MainView())),
-            Item(text: self.priceLabel, label: "Price", image: "dollarsign.circle", imgColor: Color.green, percent: self.percentLabel, view: AnyView(WalletView(walletTF: "", addressLabel: "", delegateUsername: "", amounts: "", inComingArray: [], senderArray: [])))
+            Item(text: self.priceLabel, label: "Price", image: "dollarsign.circle", imgColor: Color.green, percent: self.percentLabel, view: AnyView(WalletView(walletTF: "", addressLabel: "", amounts: "", inComingArray: [], senderArray: [])))
         ]
         
         NavigationView {
