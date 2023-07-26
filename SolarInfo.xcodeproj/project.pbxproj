@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0913135E2A71725A00AD9C76 /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0913135D2A71725A00AD9C76 /* Delegate.swift */; };
 		0922C3DC2A152CB4006E841E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DB2A152CB4006E841E /* MainView.swift */; };
 		0922C3DE2A155B36006E841E /* IncomingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922C3DD2A155B36006E841E /* IncomingData.swift */; };
 		097028D32A07D1BB005643CB /* SolarInfoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097028D22A07D1BB005643CB /* SolarInfoApp.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0913135D2A71725A00AD9C76 /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		0922C3DB2A152CB4006E841E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		0922C3DD2A155B36006E841E /* IncomingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingData.swift; sourceTree = "<group>"; };
 		097028CF2A07D1BB005643CB /* SolarInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +116,7 @@
 				09ADC02F2A66B9390076A02D /* Card.swift */,
 				09ADC0312A66EC0A0076A02D /* Transactions.swift */,
 				09ADC0332A66F7FE0076A02D /* TransactionData.swift */,
+				0913135D2A71725A00AD9C76 /* Delegate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				09D3EB162A5DD8D800985754 /* CoinData.swift in Sources */,
 				097028F22A13BBC9005643CB /* Tab.swift in Sources */,
 				09A5D45A2A61B86800A5ED69 /* OutgoingData.swift in Sources */,
+				0913135E2A71725A00AD9C76 /* Delegate.swift in Sources */,
 				09ADC02E2A6450170076A02D /* CardView.swift in Sources */,
 				0922C3DE2A155B36006E841E /* IncomingData.swift in Sources */,
 				09ADC0322A66EC0A0076A02D /* Transactions.swift in Sources */,

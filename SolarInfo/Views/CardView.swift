@@ -48,10 +48,10 @@ struct CardView: View {
                     .font(.callout)
                     .fontWeight(.semibold)
                     .foregroundColor(.gray)
-                    
-                    
-        
-                Text("\(balanceLabel)" + "SXP")
+                
+                
+                
+                Text("\(balanceLabel)" + " " + "SXP")
                     .font(.title.bold())
                     .foregroundColor(.white)
             }
@@ -96,14 +96,14 @@ struct CardView: View {
                             Image(card.cardImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                    
+                            
                                 .matchedGeometryEffect(id: card.id, in: animation)
                             
                             
                                 .rotationEffect(.init(degrees: 90))
-                                //MARK: Yükseklik ve genişliği size'a göre belirtme.
+                            //MARK: Yükseklik ve genişliği size'a göre belirtme.
                                 .frame(width: size.height, height: size.width)
-                                //MARK: Ortalama
+                            //MARK: Ortalama
                                 .frame(width: size.width, height: size.height)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
@@ -145,7 +145,7 @@ struct CardView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity, alignment: .leading)
-
+                
             }
             .padding(.bottom, 15)
             .opacity(showDetailContent ? 1 : 0)
@@ -172,31 +172,36 @@ struct CardView: View {
     }
     
     //MARK: Expense
+    // SVZJRMQYJDJgpAcpiDtLhxHu9LwmbbvVh4
     @ViewBuilder
     func ExpenseView()->some View {
         GeometryReader { proxy in
             let size = proxy.size
             
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 20){
-                    ForEach(incomingArray, id:\.self) { incoming in
+                HStack(spacing: 14) {
+                    VStack(alignment: .leading, spacing: 8){
                         ForEach(senderArray, id:\.self) { sender in
-                        HStack{
-                            let firstThree = sender.prefix(3)
-                            let lastThree = sender.suffix(3)
-                            let formattedText = "\(firstThree)...\(lastThree)"
-                            Text("\(formattedText)")
-                                .foregroundColor(.white)
-                        Image(systemName: "arrow.up.forward")
-                                .foregroundColor(.green)
-                                .padding(.leading, 7)
-                        Text("\(incoming)" + " " + "SXP")
-                            .foregroundColor(.white)
+                            HStack {
+                                let formattedSender = "\(sender.prefix(3))" + "..." + "\(sender.suffix(3))"
+                                Text(formattedSender)
+                            }
+                        }
                     }
-                    }
+                    VStack(alignment: .leading, spacing: 8){
+                        ForEach(incomingArray, id:\.self) { incoming in
+                            HStack{
+                                Image(systemName: "arrow.down.forward")
+                                    .foregroundColor(.green)
+                                    .padding(.trailing, 5)
+                                Text("\(incoming)" + " " + "SXP")
+                            }
+                        }
+                        
                     }
                 }
             }
+            
             .frame(width: size.width, height: size.height)
             .background{
                 RoundedRectangle(cornerRadius: 15, style: .continuous)
@@ -206,25 +211,6 @@ struct CardView: View {
         }
         .padding(.top)
         .padding(.horizontal, 10)
-    }
-}
-
-struct TransactionCardView: View{
-    
-    var transaction: Card
-    
-    var body: some View{
-        HStack(spacing: 14){
-            Text("From:" + " " + "SUGskkbg")
-                .foregroundColor(.black)
-            Image(systemName: "arrow.up.forward")
-                .foregroundColor(.green)
-            Text("Amount:" + " " + "+8.99 SXP")
-                .foregroundColor(.green)
-            Text("Fee:" + " " + "0.18 SXP")
-                .foregroundColor(.black)
-        }
-        .padding()
     }
 }
 

@@ -2,18 +2,16 @@
 //  Delegate.swift
 //  SolarInfo
 //
-//  Created by Bora Gündoğu on 7.06.2023.
+//  Created by Bora Gündoğu on 26.07.2023.
 //
 
 import Foundation
 
-
-
-struct Delegate: Codable {
+struct Delegates: Codable{
     let data: [DelegateData]
 }
 
 struct DelegateData: Codable {
-    var username: String
     
+    let username, address: String
 }

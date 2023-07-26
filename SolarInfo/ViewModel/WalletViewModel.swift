@@ -12,6 +12,8 @@ class WalletViewModel: ObservableObject{
     var choosenWallet: String = ""
     var balanceValue: String = ""
     var adressValue: String = ""
+    var delegateAddress: String = ""
+    var delegateUsernames: String = ""
     
     
     func fetchIncoming(choosenWallet: String,completion: @escaping ([DataValue]?) -> Void){
@@ -38,6 +40,30 @@ class WalletViewModel: ObservableObject{
             }
         }.resume()
        
+    }
+    
+    func fetchDelegates(completion: @escaping (String,String) -> Void){
+        
+        guard let url = URL(string: "https://api.solar.org/api/delegates?page=1&limit=53") else {
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("error fetching delegate data \(error?.localizedDescription ?? "unknown delegate error")")
+                return
+            }
+            
+            do {
+                let delegateInfo = try JSONDecoder().decode(DelegateData.self, from: data)
+                let address = delegateInfo.address
+                let username = delegateInfo.username
+                completion(address,username)
+            }
+            catch{
+                print("error decoding delegate data \(error.localizedDescription)")
+            }
+        }.resume()
     }
     
     func fetchWallet(choosenWallet: String, completion: @escaping (String, String) -> Void){

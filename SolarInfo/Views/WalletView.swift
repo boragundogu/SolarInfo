@@ -15,7 +15,7 @@ struct WalletView: View {
     @ObservedObject var walletViewModel = WalletViewModel()
     
     @State var walletTF: String
-    @State var addressLabel : String
+    @State var addressLabel: String
     @State private var walletData: WalletData?
     @State var balanceLabel = ""
     @State var amounts: String
@@ -73,8 +73,7 @@ struct WalletView: View {
                                                     let formatter = NumberFormatter()
                                                     formatter.numberStyle = .decimal
                                                     let amountString = formatter.string(for: integerAmounts)
-                                                    self.inComingArray.append(String(amountString!.prefix(4)))
-                                                    //print(inComingArray)
+                                                    self.inComingArray.append(String(amountString!))
                                                 }
                                             }
                                         }
